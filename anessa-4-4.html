@@ -10,9 +10,13 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
+
+  <!-- Wohnungs-Übersicht: Fotos, Beschreibung, Preise -->
   <div class="eb-categories"></div>
   <script src="https://www.easy-booking.at/ebPlugins/categories_v2/jquery.easybooking.categories.js"></script>
   <script type="text/javascript">
+    var EB_BOOKING_URL = "https://www.easy-booking.at/bookingengine2/#11803/2/2107-3738-2369/category/13";
+
     function ebCategoriesLoadedCheck() {
       if (typeof jQuery != "undefined") {
         var data = ({
@@ -25,12 +29,8 @@
           maxImgWidth: 960,
           maxImgHeight: 620,
           minImgHeight: 500,
-          bookingPage: {
-            style: "popup"
-          },
-          enquiryPage: {
-            style: "popup"
-          },
+          bookingPage: false,
+          enquiryPage: false,
           showAvailability: true,
           showPrices: true,
           showDetails: true,
@@ -43,41 +43,43 @@
           showFilter: false,
           locales: [{
             en: {
-              for: "for",
-              persons: "persons",
-              from: "from",
-              perPerson: "per person",
-              description: "Description",
-              details: "Details",
-              price: "Price",
-              availability: "Availability",
-              layout: "Layout",
-              request: "Request",
-              booking: "Booking",
-              allRooms: "Show all rooms"
+              for: "for", persons: "persons", from: "from", perPerson: "per person",
+              description: "Description", details: "Details", price: "Price",
+              availability: "Availability", layout: "Layout", request: "Request",
+              booking: "Booking", allRooms: "Show all rooms"
             },
             de: {
-              for: "für",
-              persons: "Personen",
-              from: "ab",
-              perPerson: "pro Person",
-              description: "Beschreibung",
-              details: "Ausstattung",
-              price: "Preise",
-              availability: "Kalender",
-              layout: "Grundriss",
-              request: "Anfragen",
-              booking: "Buchen",
-              allRooms: "Alle Zimmer"
+              for: "für", persons: "Personen", from: "ab", perPerson: "pro Person",
+              description: "Beschreibung", details: "Ausstattung", price: "Preise",
+              availability: "Kalender", layout: "Grundriss", request: "Anfragen",
+              booking: "Buchen", allRooms: "Alle Zimmer"
             }
           }]
         });
         loadCategories(data);
+
+        // "Anfragen"-Button ausblenden, "Buchen"-Button an unseren funktionierenden Direktlink koppeln
+        var fixButtons = setInterval(function () {
+          jQuery("a, button").filter(function () {
+            return jQuery(this).text().trim() === "Anfragen";
+          }).hide();
+
+          jQuery("a, button").filter(function () {
+            return jQuery(this).text().trim() === "Buchen";
+          }).off("click.ebFix").on("click.ebFix", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(EB_BOOKING_URL, "easybookingPopup", "width=1000,height=800,scrollbars=yes,resizable=yes");
+          });
+        }, 500);
+        setTimeout(function () { clearInterval(fixButtons); }, 8000);
+
       } else {
         setTimeout(ebCategoriesLoadedCheck, 200);
       }
     }
     ebCategoriesLoadedCheck();
   </script>
+
 </body>
 </html>
