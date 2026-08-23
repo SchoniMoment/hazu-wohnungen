@@ -5,127 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Haus Mirador - Wohnung 4</title>
   <style>
-    html, body { margin: 0; padding: 0; background-color: rgb(244, 241, 234); }
-    .lang-switch {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-      padding: 10px 10px 0 10px;
-      font-family: Arial, sans-serif;
-    }
-    .lang-switch button {
-      border: 1px solid #A48D78;
-      background: #F4F1EA;
-      color: #3A332B;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .lang-switch button.active {
-      background: #A48D78;
-      color: #fff;
-    }
-    .lang-switch button:hover {
-      background: #CBB9A4;
-    }
+    html, body { margin: 0; padding: 0; }
   </style>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-  <div class="lang-switch" id="langSwitch">
-    <button data-lang="de" class="active">DE</button>
-    <button data-lang="en">EN</button>
-    <button data-lang="nl">NL</button>
-    <button data-lang="it">IT</button>
-    <button data-lang="fr">FR</button>
-  </div>
-  <div id="ebCategoriesContainer" class="eb-categories"></div>
-
+  <div class="eb-categories"></div>
   <script src="https://www.easy-booking.at/ebPlugins/categories_v2/jquery.easybooking.categories.js"></script>
   <script type="text/javascript">
-    function buildData(lang) {
-      return {
-        customerId: 11803,
-        serialNo: "2107-3738-2369",
-        localeId: 2,
-        localeName: lang,
-        templateId: 1,
-        templateURL: "//easy-booking.at/ebPlugins/categories_v2/tpl/1/index.html",
-        maxImgWidth: 960,
-        maxImgHeight: 620,
-        minImgHeight: 500,
-        bookingPage: { style: "popup" },
-        enquiryPage: { style: "popup" },
-        showAvailability: true,
-        showPrices: true,
-        showDetails: true,
-        showDescription: true,
-        showPlan: true,
-        category: [11],
-        roomLevel: false,
-        room: "all",
-        roomSorting: "random",
-        showFilter: false,
-        locales: [{
-          en: {
-            for: "for", persons: "persons", from: "from", perPerson: "per person",
-            description: "Description", details: "Details", price: "Price",
-            availability: "Availability", layout: "Layout", request: "Request",
-            booking: "Booking", allRooms: "Show all rooms"
-          },
-          de: {
-            for: "für", persons: "Personen", from: "ab", perPerson: "pro Person",
-            description: "Beschreibung", details: "Ausstattung", price: "Preise",
-            availability: "Kalender", layout: "Grundriss", request: "Anfragen",
-            booking: "Buchen", allRooms: "Alle Zimmer"
-          },
-          nl: {
-            for: "voor", persons: "personen", from: "vanaf", perPerson: "per persoon",
-            description: "Beschrijving", details: "Details", price: "Prijs",
-            availability: "Beschikbaarheid", layout: "Plattegrond", request: "Aanvragen",
-            booking: "Boeken", allRooms: "Alle kamers"
-          },
-          it: {
-            for: "per", persons: "persone", from: "da", perPerson: "a persona",
-            description: "Descrizione", details: "Dettagli", price: "Prezzo",
-            availability: "Disponibilità", layout: "Planimetria", request: "Richiedi",
-            booking: "Prenota", allRooms: "Tutte le camere"
-          },
-          fr: {
-            for: "pour", persons: "personnes", from: "à partir de", perPerson: "par personne",
-            description: "Description", details: "Détails", price: "Prix",
-            availability: "Disponibilité", layout: "Plan", request: "Demander",
-            booking: "Réserver", allRooms: "Toutes les chambres"
-          }
-        }]
-      };
-    }
-
-    function renderWidget(lang) {
-      jQuery("#ebCategoriesContainer").empty();
-      loadCategories(buildData(lang));
-    }
-
     function ebCategoriesLoadedCheck() {
-      if (typeof jQuery != "undefined" && typeof loadCategories == "function") {
-        renderWidget("de");
+      if (typeof jQuery != "undefined") {
+        var data = ({
+          customerId: 11803,
+          serialNo: "2107-3738-2369",
+          localeId: 2,
+          localeName: "de",
+          templateId: 1,
+          templateURL: "//easy-booking.at/ebPlugins/categories_v2/tpl/1/index.html",
+          maxImgWidth: 960,
+          maxImgHeight: 620,
+          minImgHeight: 500,
+          bookingPage: {
+            style: "popup"
+          },
+          enquiryPage: {
+            style: "popup"
+          },
+          showAvailability: true,
+          showPrices: true,
+          showDetails: true,
+          showDescription: true,
+          showPlan: true,
+          category: [11],
+          roomLevel: false,
+          room: "all",
+          roomSorting: "random",
+          showFilter: false,
+          locales: [{
+            en: {
+              for: "for",
+              persons: "persons",
+              from: "from",
+              perPerson: "per person",
+              description: "Description",
+              details: "Details",
+              price: "Price",
+              availability: "Availability",
+              layout: "Layout",
+              request: "Request",
+              booking: "Booking",
+              allRooms: "Show all rooms"
+            },
+            de: {
+              for: "für",
+              persons: "Personen",
+              from: "ab",
+              perPerson: "pro Person",
+              description: "Beschreibung",
+              details: "Ausstattung",
+              price: "Preise",
+              availability: "Kalender",
+              layout: "Grundriss",
+              request: "Anfragen",
+              booking: "Buchen",
+              allRooms: "Alle Zimmer"
+            }
+          }]
+        });
+        loadCategories(data);
       } else {
         setTimeout(ebCategoriesLoadedCheck, 200);
       }
     }
     ebCategoriesLoadedCheck();
-
-    document.getElementById("langSwitch").addEventListener("click", function (e) {
-      if (e.target.tagName === "BUTTON") {
-        var lang = e.target.getAttribute("data-lang");
-        document.querySelectorAll("#langSwitch button").forEach(function (btn) {
-          btn.classList.remove("active");
-        });
-        e.target.classList.add("active");
-        renderWidget(lang);
-      }
-    });
   </script>
 </body>
 </html>
