@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sunnsyte8</title>
+  <title>Sunnsyte 8 - SchöniMoment</title>
   <style>
     html, body { margin: 0; padding: 0; }
   </style>
@@ -75,6 +75,18 @@
           }]
         });
         loadCategories(data);
+
+        // Klick auf "Buchen" / "Anfragen" -> Buchungsmaske direkt bei Gemmi (gemmi2)
+        document.addEventListener("click", function (e) {
+          var el = e.target.closest ? e.target.closest("a, button") : null;
+          if (!el) return;
+          var t = (el.textContent || "").trim().toLowerCase();
+          if (t.length < 30 && (t === "buchen" || t === "anfragen")) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = "https://schonimoment.github.io/hazu-wohnungen/sunnsyte8-2";
+          }
+        }, true);
       } else {
         setTimeout(ebCategoriesLoadedCheck, 200);
       }
