@@ -26,11 +26,11 @@
           maxImgHeight: 620,
           minImgHeight: 500,
           bookingPage: {
-            url: "https://schonimoment.github.io/hazu-wohnungen/gemmi2",
+            url: "https://www.easy-booking.at/bookingengine2/#11803/2/2107-3738-2369/category/15",
             style: "content"
           },
           enquiryPage: {
-            url: "https://schonimoment.github.io/hazu-wohnungen/gemmi2",
+            url: "https://www.easy-booking.at/bookingengine2/#11803/2/2107-3738-2369/category/15",
             style: "content"
           },
           showAvailability: true,
@@ -75,6 +75,18 @@
           }]
         });
         loadCategories(data);
+
+        // Klick auf "Buchen" / "Anfragen" -> Buchungsmaske direkt bei Gemmi (gemmi2)
+        document.addEventListener("click", function (e) {
+          var el = e.target.closest ? e.target.closest("a, button") : null;
+          if (!el) return;
+          var t = (el.textContent || "").trim().toLowerCase();
+          if (t.length < 30 && (t === "buchen" || t === "anfragen")) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = "https://schonimoment.github.io/hazu-wohnungen/gemmi2";
+          }
+        }, true);
       } else {
         setTimeout(ebCategoriesLoadedCheck, 200);
       }
