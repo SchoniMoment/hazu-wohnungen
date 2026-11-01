@@ -14,9 +14,10 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://www.easy-booking.at/bookingengine2/js/jquery.easybooking.frontend.js"></script>
   <script>
-    // Testversion: Kategorie 15 über den Hash vorgeben, falls die Buchungsmaske ihn auswertet
-    if (!window.location.hash) {
-      window.location.hash = "#11803/2/2107-3738-2369/category/15";
+    // Kategorie 15 (Gemmi) immer erzwingen, auch wenn von der Startseite andere Angaben mitkommen
+    var EB_HASH = "#11803/2/2107-3738-2369/category/15";
+    if (window.location.hash !== EB_HASH) {
+      history.replaceState(null, "", window.location.pathname + EB_HASH);
     }
 
     function ebFrontendLoadedCheck() {
