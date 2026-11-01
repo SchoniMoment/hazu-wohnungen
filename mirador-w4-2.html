@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haus Mirador - Wohnung 4 buchen - SchöniMoment</title>
+  <style>
+    html, body { margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+
+  <div id="ebFrontEndFrame"></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://www.easy-booking.at/bookingengine2/js/jquery.easybooking.frontend.js"></script>
+  <script>
+    // Kategorie 15 (Gemmi) immer erzwingen, auch wenn von der Startseite andere Angaben mitkommen
+    var EB_HASH = "#11803/2/2107-3738-2369/category/11";
+    if (window.location.hash !== EB_HASH) {
+      history.replaceState(null, "", window.location.pathname + EB_HASH);
+    }
+
+    function ebFrontendLoadedCheck() {
+      if (typeof jQuery != "undefined") {
+        if (jQuery.fn.ebFrontEnd) {
+          jQuery("#ebFrontEndFrame").ebFrontEnd({
+            customerId: 11803,
+            serialNo: "2107-3738-2369",
+            localeId: 2,
+            frameId: "ebFrontEndPlugin",
+            scrollOffset: 0,
+            adultOnly: false,
+            gtmDL: "dataLayer",
+            hideFilters: "on",
+            disableScroll: true,
+            source: "",
+            collapsedExtras: false
+          });
+        } else {
+          setTimeout(ebFrontendLoadedCheck, 200);
+        }
+      } else {
+        setTimeout(ebFrontendLoadedCheck, 200);
+      }
+    }
+    ebFrontendLoadedCheck();
+  </script>
+
+</body>
+</html>
